@@ -1,3 +1,5 @@
+require_relative './db_connection.rb'
+
 module MyActiveRecord
   class Relation < BasicObject
 

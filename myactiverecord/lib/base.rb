@@ -11,6 +11,20 @@ module MyActiveRecord
     extend MyActiveRecord::QueryMethods
     extend MyActiveRecord::Associatable
 
+    # def self.method_missing(method, *args)
+    #   method = method.to_s
+    #   if method.start_with?("find_by")
+    #     columns = method[8..-1].split("_and_")
+    #     opts = {}
+    #     columns.each_with_index do |col, i|
+    #       opts[col] = args[i]
+    #     end
+    #     self.where(opts)
+    #   else
+    #     super
+    #   end
+    # end
+
     def self.columns
       @columns ||= DBConnection.execute2("SELECT * FROM #{table_name} LIMIT 1")[0].map(&:to_sym)
     end
@@ -67,9 +81,6 @@ module MyActiveRecord
     def initialize(params = {})
       params.each do |k, v|
         attr_name = k.to_sym
-        unless self.class.columns.include?(attr_name)
-          raise "unknown attribute '#{attr_name}'"
-        end
 
         send("#{attr_name}=", v)
       end
@@ -115,5 +126,6 @@ module MyActiveRecord
     def save
       id.nil? ? insert : update
     end
+
   end
 end

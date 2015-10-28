@@ -7,6 +7,7 @@ require_relative '../my_action_dispatch/params'
 require_relative '../my_action_dispatch/route'
 require_relative '../my_action_dispatch/router'
 require_relative '../my_action_dispatch/session'
+require 'byebug'
 
 module MyActionController
   class Base
@@ -59,7 +60,7 @@ module MyActionController
     end
 
     def render(template_name)
-      path = File.expand_path("../../../views/#{self.class.to_s.underscore}/#{template_name}.html.erb", __FILE__)
+      path = File.expand_path("../../views/#{self.class.to_s.underscore}/#{template_name}.html.erb", __FILE__)
       template = ERB.new(File.read(path))
       render_content(template.result(binding), "text/html")
     end

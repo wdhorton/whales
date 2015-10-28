@@ -1,10 +1,13 @@
 require 'webrick'
+require '/Users/appacademy/desktop/Test/routes.rb'
 
 def start_server
+  router = make_router
+
+
   server = WEBrick::HTTPServer.new(Port: 3000)
   server.mount_proc('/') do |req, res|
-    response.content_type = "text/text"
-    response.body = "Your server is running!"
+    route = router.run(req, res)
   end
 
   trap('INT') { server.shutdown }
