@@ -1,16 +1,16 @@
-require '01_sql_object'
+require 'base'
 require 'securerandom'
 
-describe SQLObject do
+describe MyActiveRecord::Base do
   before(:each) { DBConnection.reset }
   after(:each) { DBConnection.reset }
 
   before(:each) do
-    class Cat < SQLObject
+    class Cat < MyActiveRecord::Base
       self.finalize!
     end
 
-    class Human < SQLObject
+    class Human < MyActiveRecord::Base
       self.table_name = 'humans'
 
       self.finalize!

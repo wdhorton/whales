@@ -1,22 +1,22 @@
-require 'associatable_bonus'
+require 'base'
 
 describe 'Associatable' do
   before(:each) { DBConnection.reset }
   after(:each) { DBConnection.reset }
 
   before(:all) do
-    class Dog < SQLObject
+    class Dog < MyActiveRecord::Base
       has_many :walkings
       finalize!
     end
 
-    class Walking < SQLObject
+    class Walking < MyActiveRecord::Base
       belongs_to :dog
       belongs_to :human
       finalize!
     end
 
-    class Human < SQLObject
+    class Human < MyActiveRecord::Base
       has_many :walkings
       self.table_name = "humans"
       finalize!

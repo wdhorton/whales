@@ -1,15 +1,15 @@
-require '02_searchable'
+require 'base'
 
-describe 'Searchable' do
+describe 'QueryMethods' do
   before(:each) { DBConnection.reset }
   after(:each) { DBConnection.reset }
 
   before(:all) do
-    class Cat < SQLObject
+    class Cat < MyActiveRecord::Base
       finalize!
     end
 
-    class Human < SQLObject
+    class Human < MyActiveRecord::Base
       self.table_name = 'humans'
 
       finalize!

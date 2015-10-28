@@ -1,17 +1,17 @@
-require '04_associatable2'
+require 'base'
 
 describe 'Associatable' do
   before(:each) { DBConnection.reset }
   after(:each) { DBConnection.reset }
 
   before(:all) do
-    class Cat < SQLObject
+    class Cat < MyActiveRecord::Base
       belongs_to :human, foreign_key: :owner_id
 
       finalize!
     end
 
-    class Human < SQLObject
+    class Human < MyActiveRecord::Base
       self.table_name = 'humans'
 
       has_many :cats, foreign_key: :owner_id
@@ -20,7 +20,7 @@ describe 'Associatable' do
       finalize!
     end
 
-    class House < SQLObject
+    class House < MyActiveRecord::Base
       has_many :humans
 
       finalize!
@@ -29,7 +29,7 @@ describe 'Associatable' do
 
   describe '::assoc_options' do
     it 'defaults to empty hash' do
-      class TempClass < SQLObject
+      class TempClass < MyActiveRecord::Base
       end
 
       expect(TempClass.assoc_options).to eq({})
@@ -39,7 +39,7 @@ describe 'Associatable' do
       cat_assoc_options = Cat.assoc_options
       human_options = cat_assoc_options[:human]
 
-      expect(human_options).to be_instance_of(BelongsToOptions)
+      expect(human_options).to be_instance_of(MyActiveRecord::BelongsToOptions)
       expect(human_options.foreign_key).to eq(:owner_id)
       expect(human_options.class_name).to eq('Human')
       expect(human_options.primary_key).to eq(:id)

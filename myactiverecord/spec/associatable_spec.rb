@@ -1,9 +1,9 @@
-require '03_associatable'
+require 'base'
 
 describe 'AssocOptions' do
-  describe 'BelongsToOptions' do
+  describe 'MyActiveRecord::BelongsToOptions' do
     it 'provides defaults' do
-      options = BelongsToOptions.new('house')
+      options = MyActiveRecord::BelongsToOptions.new('house')
 
       expect(options.foreign_key).to eq(:house_id)
       expect(options.class_name).to eq('House')
@@ -11,7 +11,7 @@ describe 'AssocOptions' do
     end
 
     it 'allows overrides' do
-      options = BelongsToOptions.new('owner',
+      options = MyActiveRecord::BelongsToOptions.new('owner',
                                      foreign_key: :human_id,
                                      class_name: 'Human',
                                      primary_key: :human_id
@@ -23,9 +23,9 @@ describe 'AssocOptions' do
     end
   end
 
-  describe 'HasManyOptions' do
+  describe 'MyActiveRecord::HasManyOptions' do
     it 'provides defaults' do
-      options = HasManyOptions.new('cats', 'Human')
+      options = MyActiveRecord::HasManyOptions.new('cats', 'Human')
 
       expect(options.foreign_key).to eq(:human_id)
       expect(options.class_name).to eq('Cat')
@@ -33,7 +33,7 @@ describe 'AssocOptions' do
     end
 
     it 'allows overrides' do
-      options = HasManyOptions.new('cats', 'Human',
+      options = MyActiveRecord::HasManyOptions.new('cats', 'Human',
                                    foreign_key: :owner_id,
                                    class_name: 'Kitten',
                                    primary_key: :human_id
@@ -47,11 +47,11 @@ describe 'AssocOptions' do
 
   describe 'AssocOptions' do
     before(:all) do
-      class Cat < SQLObject
+      class Cat < MyActiveRecord::Base
         self.finalize!
       end
 
-      class Human < SQLObject
+      class Human < MyActiveRecord::Base
         self.table_name = 'humans'
 
         self.finalize!
@@ -59,18 +59,18 @@ describe 'AssocOptions' do
     end
 
     it '#model_class returns class of associated object' do
-      options = BelongsToOptions.new('human')
+      options = MyActiveRecord::BelongsToOptions.new('human')
       expect(options.model_class).to eq(Human)
 
-      options = HasManyOptions.new('cats', 'Human')
+      options = MyActiveRecord::HasManyOptions.new('cats', 'Human')
       expect(options.model_class).to eq(Cat)
     end
 
     it '#table_name returns table name of associated object' do
-      options = BelongsToOptions.new('human')
+      options = MyActiveRecord::BelongsToOptions.new('human')
       expect(options.table_name).to eq('humans')
 
-      options = HasManyOptions.new('cats', 'Human')
+      options = MyActiveRecord::HasManyOptions.new('cats', 'Human')
       expect(options.table_name).to eq('cats')
     end
   end
@@ -81,13 +81,13 @@ describe 'Associatable' do
   after(:each) { DBConnection.reset }
 
   before(:all) do
-    class Cat < SQLObject
+    class Cat < MyActiveRecord::Base
       belongs_to :human, foreign_key: :owner_id
 
       finalize!
     end
 
-    class Human < SQLObject
+    class Human < MyActiveRecord::Base
       self.table_name = 'humans'
 
       has_many :cats, foreign_key: :owner_id
@@ -96,7 +96,7 @@ describe 'Associatable' do
       finalize!
     end
 
-    class House < SQLObject
+    class House < MyActiveRecord::Base
       has_many :humans
 
       finalize!
