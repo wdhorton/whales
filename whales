@@ -1,0 +1,63 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+require_relative 'server'
+include FileUtils
+
+if ARGV.first == 'new' && ARGV[1]
+  puts "Making new MyRails App:"
+  app_name = ARGV[1]
+  display = {verbose: true}
+
+  cd '..'
+  mkdir app_name, display
+  cd app_name
+  touch "routes.rb"
+  File.open("routes.rb", 'w') do |f|
+    f.write <<-TEXT
+require_relative '../../../rails_lite_final/myactionpack2/lib/base'
+WhalesDispatch::Router.new.draw do
+
+
+end\n
+    TEXT
+  end
+
+  mkdir_p 'app/controllers', display
+  cd 'app'
+  mkdir 'models', display
+  mkdir 'views', display
+
+end
+
+if ARGV.first == 'server' || ARGV.first == 's'
+  start_server
+end
+
+if ARGV.first == 'generate' || ARGV.first == 'g' && ARGV.length == 3
+  type = ARGV[1]
+  name = ARGV[2]
+
+  cd '../Test/'
+
+  path = "app/#{type}s/#{name.downcase}.rb"
+  touch path
+
+  if type == "model"
+    File.open(path, 'w') do |f|
+      f.write <<-TEXT
+require_relative '../../../whales/whales_orm/lib/base'
+class #{name.capitalize} < WhalesORM::Base
+end\n
+      TEXT
+    end
+  elsif type == "controller"
+    File.open(path, 'w') do |f|
+      f.write <<-TEXT
+require_relative '../../../whales/myactionpack2/lib/base'
+class #{name.capitalize} < WhalesController::Base
+end\n
+      TEXT
+    end
+  end
+end
