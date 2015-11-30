@@ -11,19 +11,19 @@ module WhalesORM
     extend WhalesORM::QueryMethods
     extend WhalesORM::Associatable
 
-    # def self.method_missing(method, *args)
-    #   method = method.to_s
-    #   if method.start_with?("find_by")
-    #     columns = method[8..-1].split("_and_")
-    #     opts = {}
-    #     columns.each_with_index do |col, i|
-    #       opts[col] = args[i]
-    #     end
-    #     self.where(opts)
-    #   else
-    #     super
-    #   end
-    # end
+    def self.method_missing(method, *args)
+      method = method.to_s
+      if method.start_with?("find_by")
+        columns = method[8..-1].split("_and_")
+        opts = {}
+        columns.each_with_index do |col, i|
+          opts[col] = args[i]
+        end
+        self.where(opts)
+      else
+        super
+      end
+    end
 
     def self.columns
       @columns ||= DBConnection.execute2("SELECT * FROM #{table_name} LIMIT 1")[0].map(&:to_sym)

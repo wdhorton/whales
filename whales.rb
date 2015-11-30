@@ -35,4 +35,8 @@ def scripts(router)
       end
     end
   end
+
+  if ARGV.first == "db:reset"
+    DBConnection.reset
+  end
 end

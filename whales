@@ -4,7 +4,7 @@ require 'fileutils'
 include FileUtils
 
 if ARGV.first == 'new' && ARGV[1]
-  puts "Making new MyRails App:"
+  puts "Making new Whales App:"
   app_name = ARGV[1]
   display = {verbose: true}
 

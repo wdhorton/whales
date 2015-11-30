@@ -24,9 +24,7 @@ module WhalesDispatch
     end
 
     def match(req)
-      match = routes.select { |route| route.matches?(req) }.first
-      debugger
-      match
+      routes.select { |route| route.matches?(req) }.first
     end
 
     def run(req, res)

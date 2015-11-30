@@ -17,6 +17,17 @@ module WhalesDispatch
       @params.to_s
     end
 
+    def require(key)
+      @params = self[key]
+      self
+    end
+
+    def permit(*attrs)
+      @params.select do |k, _|
+        attrs.include?(k.to_s) || attrs.include?(k.to_sym)
+      end
+    end
+
     class AttributeNotFoundError < ArgumentError; end;
 
     private
