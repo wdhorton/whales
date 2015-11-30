@@ -79,9 +79,9 @@ module WhalesORM
     end
 
     def initialize(params = {})
+      debugger
       params.each do |k, v|
         attr_name = k.to_sym
-        raise "unknown attribute '#{attr_name}'" unless self.class.columns.include?(attr_name)
 
         send("#{attr_name}=", v)
       end
