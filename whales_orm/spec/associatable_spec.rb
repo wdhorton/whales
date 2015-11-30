@@ -1,4 +1,7 @@
 require 'base'
+ROOT_FOLDER = File.join(File.dirname(__FILE__), '../test_db')
+SQL_FILE = File.join(ROOT_FOLDER, 'cats.sql')
+DB_FILE = File.join(ROOT_FOLDER, 'cats.db')
 
 describe 'AssocOptions' do
   describe 'WhalesORM::BelongsToOptions' do
@@ -91,6 +94,7 @@ describe 'Associatable' do
       self.table_name = 'humans'
 
       has_many :cats, foreign_key: :owner_id
+      has_many :walkings
       belongs_to :house
 
       finalize!
@@ -99,6 +103,17 @@ describe 'Associatable' do
     class House < WhalesORM::Base
       has_many :humans
 
+      finalize!
+    end
+
+    class Dog < WhalesORM::Base
+      has_many :walkings
+      finalize!
+    end
+
+    class Walking < WhalesORM::Base
+      belongs_to :dog
+      belongs_to :human
       finalize!
     end
   end
@@ -210,6 +225,34 @@ describe 'Associatable' do
 
       expect(house).to be_instance_of(House)
       expect(house.address).to eq('26th and Guerrero')
+    end
+  end
+
+  describe "has_many :through" do
+    before(:all) do
+      class Human
+        has_many :dogs, through: :walkings, source: :dog
+
+        finalize!
+      end
+    end
+
+    let(:human) { Human.find(1) }
+    let(:lonely_human) { Human.find(4) }
+
+    it 'adds getter method' do
+      expect(human).to respond_to(:dogs)
+    end
+
+    it 'gets the correct dogs for this human' do
+      results = human.dogs
+      names = results.map { |result| result.name }.sort
+
+      expect(names).to eq(['Fido', 'Rex', 'Rover'])
+    end
+
+    it "returns nil when human has no dogs" do
+      expect(lonely_human.dogs).to be_nil
     end
   end
 end

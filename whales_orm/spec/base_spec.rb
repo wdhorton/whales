@@ -1,5 +1,8 @@
 require 'base'
 require 'securerandom'
+ROOT_FOLDER = File.join(File.dirname(__FILE__), '../test_db')
+SQL_FILE = File.join(ROOT_FOLDER, 'cats.sql')
+DB_FILE = File.join(ROOT_FOLDER, 'cats.db')
 
 describe WhalesORM::Base do
   before(:each) { DBConnection.reset }
@@ -64,12 +67,6 @@ describe WhalesORM::Base do
       expect(c.name).to eq 'Don Frye'
       expect(c.id).to eq 100
       expect(c.owner_id).to eq 4
-    end
-
-    it '#initialize throws the error with unknown attr' do
-      expect do
-        Cat.new(favorite_band: 'Anybody but The Eagles')
-      end.to raise_error "unknown attribute 'favorite_band'"
     end
   end
 
