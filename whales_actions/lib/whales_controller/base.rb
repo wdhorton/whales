@@ -7,7 +7,6 @@ require_relative '../whales_dispatch/params'
 require_relative '../whales_dispatch/route'
 require_relative '../whales_dispatch/router'
 require_relative '../whales_dispatch/session'
-require 'byebug'
 
 module WhalesController
   class Base
@@ -59,8 +58,9 @@ module WhalesController
       flash.store_flash(res)
     end
 
-    def render(template_name)
-      path = File.expand_path("../../views/#{self.class.to_s.underscore}/#{template_name}.html.erb", __FILE__)
+    def render(template_name, file_location = nil)
+      file_location ||= __FILE__
+      path = File.expand_path("../../views/#{self.class.to_s[0..-11].underscore}/#{template_name}.html.erb", file_location)
       template = ERB.new(File.read(path))
       render_content(template.result(binding), "text/html")
     end

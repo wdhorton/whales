@@ -79,7 +79,6 @@ module WhalesORM
     end
 
     def initialize(params = {})
-      debugger
       params.each do |k, v|
         attr_name = k.to_sym
 
