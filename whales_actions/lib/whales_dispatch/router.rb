@@ -9,7 +9,6 @@ module WhalesDispatch
       @routes = []
     end
 
-    # simply adds a new route to the list of routes
     def add_route(pattern, method, controller_class, action_name)
       @routes << Route.new(pattern, method, controller_class, action_name)
     end
@@ -20,18 +19,16 @@ module WhalesDispatch
       end
     end
 
-    # evaluate the proc in the context of the instance
-    # for syntactic sugar :)
     def draw(&proc)
       instance_eval(&proc)
     end
 
-    # should return the route that matches this request
     def match(req)
-      routes.select { |route| route.matches?(req) }.first
+      match = routes.select { |route| route.matches?(req) }.first
+      debugger
+      match
     end
 
-    # either throw 404 or call run on a matched route
     def run(req, res)
       route = match(req)
 

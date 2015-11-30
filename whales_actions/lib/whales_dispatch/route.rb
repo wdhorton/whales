@@ -8,7 +8,7 @@ module WhalesDispatch
     end
 
     def matches?(req)
-      pattern =~ req.path && http_method = req.request_method.downcase.to_sym
+      pattern =~ req.path && http_method == req.request_method.downcase.to_sym
     end
 
     def run(req, res)

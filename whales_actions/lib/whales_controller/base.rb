@@ -18,9 +18,9 @@ module WhalesController
       @res = response
       @params = WhalesDispatch::Params.new(req, route_params)
 
-      unless req.request_method == "GET"
-        verify_authenticity_token
-      end
+      # unless req.request_method == "GET"
+      #   verify_authenticity_token
+      # end
     end
 
     def already_built_response?
