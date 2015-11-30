@@ -12,27 +12,31 @@ def scripts(router)
     type = ARGV[1]
     name = ARGV[2]
 
-    cd '../Test/'
-
     path = "app/#{type}s/#{name.downcase}.rb"
     touch path
 
     if type == "model"
       File.open(path, 'w') do |f|
         f.write <<-TEXT
-  require_relative '../../../whales/whales_orm/lib/base'
-  class #{name.capitalize} < WhalesORM::Base
-  end\n
+require_relative '../../../whales/whales_orm/lib/base'
+require_relative '../../config/database.rb'
+
+class #{name.capitalize} < WhalesORM::Base
+  self.finalize!
+end\n
         TEXT
       end
     elsif type == "controller"
       File.open(path, 'w') do |f|
         f.write <<-TEXT
-  require_relative '../../../whales/whales_actions/lib/base'
-  class #{name.capitalize} < WhalesController::Base
-  end\n
+require_relative 'application_controller'
+
+class #{name.capitalize} < ApplicationController
+end\n
         TEXT
       end
+
+      mkdir "app/views/#{name.downcase}"
     end
   end
 

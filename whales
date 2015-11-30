@@ -11,7 +11,7 @@ if ARGV.first == 'new' && ARGV[1]
   cd '..'
   mkdir app_name, display
   cd app_name
-  touch "routes.rb"
+  touch "routes.rb", display
   File.open("routes.rb", 'w') do |f|
     f.write <<-TEXT
 require_relative '../../../whales/whales_actions/lib/base'
@@ -22,7 +22,59 @@ end\n
     TEXT
   end
 
+  touch "whales", display
+  File.open("whales", 'w') do |f|
+    f.write <<-TEXT
+#!/usr/bin/env ruby
+
+require_relative '../whales/whales'
+require_relative './routes'
+require_relative './config/database.rb'
+
+scripts(make_router)\n
+    TEXT
+  end
+
+  touch "Gemfile", display
+  File.open("Gemfile", "w") do |f|
+    f.write <<-TEXT
+source 'https://rubygems.org'\n
+    TEXT
+  end
+
+  mkdir "config", display
+  touch "config/database.rb", display
+  File.open("config/database.rb", "w") do |f|
+    f.write <<-TEXT
+require_relative '../../whales/whales_orm/lib/db_connection.rb'
+
+# https://tomafro.net/2010/01/tip-relative-paths-with-file-expand-path
+ROOT_FOLDER = File.join(File.dirname(__FILE__), '../db')
+
+# sql file name goes here, the default is database.sql
+SQL_FILE = File.join(ROOT_FOLDER, 'database.sql')
+
+# Here you can configure where you want the database file to be saved
+DB_FILE = File.join(ROOT_FOLDER, 'database.db')
+    TEXT
+  end
+
+  mkdir "db", display
+  touch "db/database.sql", display
+
   mkdir_p 'app/controllers', display
+
+  touch "application_controller.rb", display
+  File.open("application_controller.rb", "w") do |f|
+    f.write <<-TEXT
+require_relative '../../../whales/whales_actions/lib/whales_controller/base'
+require_relative '../../config/database.rb'
+
+class ApplicationController < WhalesController::Base
+end
+    TEXT
+  end
+
   cd 'app'
   mkdir 'models', display
   mkdir 'views', display
