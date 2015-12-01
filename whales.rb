@@ -16,6 +16,8 @@ def scripts(router)
     touch path
 
     if type == "model"
+      path = "app/#{type}s/#{name.downcase}.rb"
+      touch path
       File.open(path, 'w') do |f|
         f.write <<-TEXT
 require_relative '../../../whales/whales_orm/lib/base'
@@ -27,11 +29,13 @@ end\n
         TEXT
       end
     elsif type == "controller"
+      path = "app/#{type}s/#{name.downcase}_controller.rb"
+      touch path
       File.open(path, 'w') do |f|
         f.write <<-TEXT
 require_relative 'application_controller'
 
-class #{name.capitalize} < ApplicationController
+class #{name.capitalize}Controller < ApplicationController
 end\n
         TEXT
       end

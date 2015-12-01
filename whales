@@ -14,11 +14,18 @@ if ARGV.first == 'new' && ARGV[1]
   touch "routes.rb", display
   File.open("routes.rb", 'w') do |f|
     f.write <<-TEXT
-require_relative '../../../whales/whales_actions/lib/base'
-WhalesDispatch::Router.new.draw do
+require_relative '../whales/whales_actions/lib/whales_controller/base'
 
+def make_router
+  router = WhalesDispatch::Router.new
 
-end\n
+  router.draw do
+    # include routes using this syntax:
+    # get Regexp.new("^/users/new$"), UsersController, :new
+  end
+
+  router
+end
     TEXT
   end
 
@@ -34,6 +41,8 @@ require_relative './config/database.rb'
 scripts(make_router)\n
     TEXT
   end
+
+  chmod "+x", "whales"
 
   touch "Gemfile", display
   File.open("Gemfile", "w") do |f|
@@ -64,8 +73,8 @@ DB_FILE = File.join(ROOT_FOLDER, 'database.db')
 
   mkdir_p 'app/controllers', display
 
-  touch "application_controller.rb", display
-  File.open("application_controller.rb", "w") do |f|
+  touch "app/controllers/application_controller.rb", display
+  File.open("app/controllers/application_controller.rb", "w") do |f|
     f.write <<-TEXT
 require_relative '../../../whales/whales_actions/lib/whales_controller/base'
 require_relative '../../config/database.rb'
@@ -78,5 +87,4 @@ end
   cd 'app'
   mkdir 'models', display
   mkdir 'views', display
-
 end
