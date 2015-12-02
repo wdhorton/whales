@@ -8,6 +8,9 @@ if ARGV.first == 'new' && ARGV[1]
   app_name = ARGV[1]
   display = {verbose: true}
 
+  mkdir_p '/usr/local/bin'
+  ln_s pwd + '/whales', '/usr/local/bin'
+
   cd '..'
   mkdir app_name, display
   cd app_name
@@ -43,6 +46,7 @@ scripts(make_router)\n
   end
 
   chmod "+x", "whales"
+  ln_s pwd + '/whales', '/usr/local/bin'
 
   touch "Gemfile", display
   File.open("Gemfile", "w") do |f|
@@ -86,5 +90,6 @@ end
 
   cd 'app'
   mkdir 'models', display
-  mkdir 'views', display
+  mkdir 'views'
+
 end
