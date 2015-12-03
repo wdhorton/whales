@@ -21,5 +21,5 @@ cd whales
 cd ../MyApp
 
 # start the server
-./whales server
+whales server
 ```
