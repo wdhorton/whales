@@ -12,12 +12,6 @@ module WhalesDispatch
       @routes << Route.new(pattern, method, controller_class, action_name)
     end
 
-    HTML_METHODS.each do |method|
-      define_method(method) do |pattern, controller_class, action_name|
-        add_route(pattern, method, controller_class, action_name)
-      end
-    end
-
     def draw(&proc)
       instance_eval(&proc)
     end
