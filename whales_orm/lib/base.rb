@@ -106,6 +106,7 @@ module WhalesORM
       SQL
 
       self.id = DBConnection.last_insert_row_id
+      self
     end
 
     def update
@@ -121,10 +122,22 @@ module WhalesORM
           id = ?
       SQL
 
+      self
     end
 
     def save
       id.nil? ? insert : update
+    end
+
+    def destroy
+      DBConnection.execute(<<-SQL, id)
+        DELETE FROM
+          #{self.class.table_name}
+        WHERE
+          id = ?
+      SQL
+
+      self
     end
 
   end
