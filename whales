@@ -27,6 +27,11 @@ def make_router
     # get Regexp.new("^/users/new$"), UsersController, :new
     # or
     # resources :users, :parent, only: [:new]
+    #
+    # nested resources are given as blocks to :parent resources
+    # resources :posts, :parent do
+    #   resources :comments, :nested, only: [:index, :new, :create]
+    # end
   end
 
   router
