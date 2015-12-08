@@ -25,6 +25,8 @@ def make_router
   router.draw do
     # include routes using this syntax:
     # get Regexp.new("^/users/new$"), UsersController, :new
+    # or
+    # resources :users, :parent, only: [:new]
   end
 
   router
