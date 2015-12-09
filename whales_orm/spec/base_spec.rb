@@ -1,4 +1,4 @@
-require 'spechelper'
+require 'spec_helper'
 require 'securerandom'
 
 ROOT_FOLDER = File.join(File.dirname(__FILE__), '../test_db')
