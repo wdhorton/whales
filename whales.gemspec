@@ -16,6 +16,7 @@ Gem::Specification.new do |spec|
   spec.executables   = ["whales"]
 
   spec.add_dependency "bundler"
+  spec.add_dependency "rake"
   spec.add_dependency "whales_actions", version
   spec.add_dependency "whales_orm", version
 end
