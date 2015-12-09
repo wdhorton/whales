@@ -15,8 +15,9 @@ Gem::Specification.new do |spec|
   spec.bindir       = 'exe'
   spec.executables   = ["whales"]
 
-  spec.add_dependency "bundler"
-  spec.add_dependency "rake"
+  spec.add_dependency "bundler", "~> 1.10"
+  spec.add_dependency "rake", "10.4.2"
+
   spec.add_dependency "whales_actions", version
   spec.add_dependency "whales_orm", version
 end

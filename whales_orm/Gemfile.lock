@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    whales_orm (0.1.0)
+    whales_orm (0.1.1)
 
 GEM
   remote: https://rubygems.org/
@@ -80,8 +80,8 @@ DEPENDENCIES
   guard
   guard-rspec
   pry
-  rake (~> 10.0)
-  rspec
+  rake (= 10.4.2)
+  rspec (= 3.4.0)
   sqlite3
   whales_orm!
 
