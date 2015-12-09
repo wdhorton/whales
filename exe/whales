@@ -91,9 +91,6 @@ if ARGV.first == 'generate' || ARGV.first == 'g' && ARGV.length == 3
   type = ARGV[1]
   name = ARGV[2]
 
-  path = "app/#{type}s/#{name.downcase}.rb"
-  touch path
-
   if type == "model"
     path = "app/#{type}s/#{name.downcase}.rb"
     touch path
