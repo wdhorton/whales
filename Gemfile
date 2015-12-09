@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-gem "webrick"
-gem "activesupport"
-gem 'sqlite3'
+gemspec
+
 gem 'rspec'
-gem 'byebug'
