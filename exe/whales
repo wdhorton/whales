@@ -37,23 +37,6 @@ end
     TEXT
   end
 
-  mkdir "bin"
-  touch "bin/whales", display
-  File.open("bin/whales", 'w') do |f|
-    f.write <<-TEXT
-#!/usr/bin/env ruby
-
-require_relative '../whales/whales'
-require_relative './routes'
-require_relative './config/database.rb'
-
-scripts(make_router)\n
-    TEXT
-  end
-
-  chmod "+x", "whales"
-  ln_s pwd + '/whales', '/usr/local/bin'
-
   touch "Gemfile", display
   File.open("Gemfile", "w") do |f|
     f.write <<-TEXT
@@ -100,9 +83,9 @@ end
 
 end
 
-if ARGV.first == 'server' || ARGV.first == 's'
-  start_server(router)
-end
+# if ARGV.first == 'server' || ARGV.first == 's'
+#   start_server(router)
+# end
 
 if ARGV.first == 'generate' || ARGV.first == 'g' && ARGV.length == 3
   type = ARGV[1]
@@ -139,7 +122,7 @@ end\n
     mkdir "app/views/#{name.downcase}"
   end
 end
-
-if ARGV.first == "db:reset"
-  DBConnection.reset
-end
+#
+# if ARGV.first == "db:reset"
+#   DBConnection.reset
+# end
