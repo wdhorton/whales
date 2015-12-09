@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
 
   spec.files         = ['README.md', 'exe/whales']
 
-  spec.binddir       = 'exe'
+  spec.bindir       = 'exe'
   spec.executables   = ["whales"]
 
   spec.add_dependency "bundler"
