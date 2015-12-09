@@ -1,7 +1,7 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'sinderella/version'
+require 'whales_actions/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "whales_actions"
