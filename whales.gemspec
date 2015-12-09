@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
 
   spec.files         = ['README.md', 'exe/whales']
 
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.executables   = ["whales"]
 
   spec.add_dependency "bundler"
   spec.add_dependency "whales_actions", version
