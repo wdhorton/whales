@@ -140,5 +140,24 @@ module WhalesORM
       self
     end
 
+    def self.destroy_all(conditions = {})
+      if conditions.empty?
+        deleted = self.all
+        where_line = nil
+      else
+        deleted = self.where(conditions)
+        where_line = conditions.keys.map do |key|
+          "#{ key } = :#{ key }"
+        end.join(" AND ").insert(0, "WHERE ")
+      end
+
+      DBConnection.execute(<<-SQL, conditions)
+      DELETE FROM
+        #{ self.table_name }
+        #{ where_line }
+      SQL
+
+      deleted
+    end
   end
 end

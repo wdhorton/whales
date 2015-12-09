@@ -161,4 +161,37 @@ describe WhalesORM::Base do
       human.save
     end
   end
+
+  describe "::destroy_all" do
+    it "destroys all records when given no params" do
+      human_count = Human.all.count
+      
+      human = Human.new(fname: "Max", lname: "Powers")
+      human.save
+
+      human2 = Human.new(fname: "Charles", lname: "Sheen")
+      human2.save
+
+      expect(Human.all.count).to eq(human_count + 2)
+      Human.destroy_all
+      expect(Human.all.count).to eq(0)
+    end
+
+    it "destroys specific records when given params" do
+
+      human = Human.new(fname: "Max", lname: "Powers")
+      human.save
+
+      human2 = Human.new(fname: "Max", lname: "Nuclear")
+      human2.save
+
+      maxes = Human.where(fname: "Max")
+      expect(maxes.count).to eq(2)
+
+      Human.destroy_all({fname: "Max"})
+      maxes = Human.where(fname: "Max")
+      expect(maxes.count).to eq(0)
+    end
+
+  end
 end
