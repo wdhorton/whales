@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    WhalesActions (0.1.0)
+    whales_actions (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -75,15 +75,15 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  WhalesActions!
   activesupport
-  bundler (~> 1.5)
+  bundler (~> 1.10)
   guard
   guard-rspec
   pry
-  rake
+  rake (~> 10.0)
   rspec
   webrick
+  whales_actions!
 
 BUNDLED WITH
    1.10.6
