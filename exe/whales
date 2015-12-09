@@ -8,7 +8,6 @@ if ARGV.first == 'new' && ARGV[1]
   app_name = ARGV[1]
   display = {verbose: true}
 
-  cd '..'
   mkdir app_name, display
   cd app_name
   touch "routes.rb", display
@@ -40,6 +39,8 @@ end
   File.open("Gemfile", "w") do |f|
     f.write <<-TEXT
 source 'https://rubygems.org'\n
+
+require 'whales'
     TEXT
   end
 
@@ -47,7 +48,7 @@ source 'https://rubygems.org'\n
   touch "config/database.rb", display
   File.open("config/database.rb", "w") do |f|
     f.write <<-TEXT
-require_relative '../../whales/whales_orm/lib/db_connection.rb'
+require 'whales_orm'
 
 # https://tomafro.net/2010/01/tip-relative-paths-with-file-expand-path
 ROOT_FOLDER = File.join(File.dirname(__FILE__), '../db')
@@ -68,7 +69,7 @@ DB_FILE = File.join(ROOT_FOLDER, 'database.db')
   touch "app/controllers/application_controller.rb", display
   File.open("app/controllers/application_controller.rb", "w") do |f|
     f.write <<-TEXT
-require_relative '../../../whales/whales_actions/lib/whales_controller/base'
+require 'whales_actions'
 require_relative '../../config/database.rb'
 
 class ApplicationController < WhalesController::Base
@@ -98,7 +99,7 @@ if ARGV.first == 'generate' || ARGV.first == 'g' && ARGV.length == 3
     touch path
     File.open(path, 'w') do |f|
       f.write <<-TEXT
-require_relative '../../../whales/whales_orm/lib/base'
+require 'whales_orm'
 require_relative '../../config/database.rb'
 
 class #{name.capitalize} < WhalesORM::Base
