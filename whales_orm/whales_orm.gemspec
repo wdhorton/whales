@@ -4,11 +4,11 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'whales_actions/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "whales_actions"
-  spec.version       = WhalesActions::VERSION
+  spec.name          = "whales_orm"
+  spec.version       = WhalesORM::VERSION
   spec.authors       = ["William Horton"]
   spec.email         = ["wdt.horton@gmail.com"]
-  spec.summary       = %q{The VC in the Whales MVC framework}
+  spec.summary       = %q{The ORM for the Whales Framework}
   spec.homepage      = "https://github.com/wdhorton/whales/tree/master/whales_actions"
   spec.license       = "MIT"
 

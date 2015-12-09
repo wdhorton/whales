@@ -1,3 +1,3 @@
-module Whales
+module WhalesActions
   VERSION = "0.1.0"
 end
