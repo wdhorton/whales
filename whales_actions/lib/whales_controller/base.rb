@@ -10,7 +10,7 @@ require_relative '../whales_dispatch/session'
 
 module WhalesController
   class Base
-    attr_reader :params
+  attr_reader :params
     attr_accessor :res, :req
 
     def initialize(request, response, route_params = {})

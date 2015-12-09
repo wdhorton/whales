@@ -1,5 +1,4 @@
 require 'webrick'
-require_relative '../lib/whales_controller/base'
 
 describe WhalesDispatch::Params do
   before(:all) do
