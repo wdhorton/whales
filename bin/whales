@@ -8,9 +8,6 @@ if ARGV.first == 'new' && ARGV[1]
   app_name = ARGV[1]
   display = {verbose: true}
 
-  mkdir_p '/usr/local/bin'
-  ln_s pwd + '/whales', '/usr/local/bin'
-
   cd '..'
   mkdir app_name, display
   cd app_name
@@ -39,8 +36,9 @@ end
     TEXT
   end
 
-  touch "whales", display
-  File.open("whales", 'w') do |f|
+  mkdir "bin"
+  touch "bin/whales", display
+  File.open("bin/whales", 'w') do |f|
     f.write <<-TEXT
 #!/usr/bin/env ruby
 
