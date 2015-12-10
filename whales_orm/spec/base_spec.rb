@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative './spec_helper'
 require 'securerandom'
 
 ROOT_FOLDER = File.join(File.dirname(__FILE__), '../test_db')
@@ -165,7 +165,7 @@ describe WhalesORM::Base do
   describe "::destroy_all" do
     it "destroys all records when given no params" do
       human_count = Human.all.count
-      
+
       human = Human.new(fname: "Max", lname: "Powers")
       human.save
 

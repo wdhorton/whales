@@ -1,5 +1,5 @@
 require 'webrick'
-require 'spec_helper'
+require_relative '../spec_helper'
 
 describe WhalesController::Base do
   before(:all) do

@@ -5,6 +5,7 @@ require "rspec/core/rake_task"
 # Run with `rake spec`
 RSpec::Core::RakeTask.new(:spec) do |task|
   task.rspec_opts = ['--color', '--format', 'documentation']
+  task.pattern = '*/spec/**{,/*/**}/*_spec.rb'
 end
 
 task :default => :spec

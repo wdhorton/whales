@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    whales_actions (0.1.0)
+    whales_actions (0.1.1)
 
 GEM
   remote: https://rubygems.org/
