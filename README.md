@@ -21,7 +21,7 @@ whales new MyApp
 **Start working:**
 ```
 # cd into the new folder
-cd ../MyApp
+cd MyApp
 
 # start the server
 whales server
