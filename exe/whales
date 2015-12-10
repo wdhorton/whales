@@ -1,64 +1,65 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
 require 'fileutils'
 include FileUtils
 
-if ARGV.first == 'new' && ARGV[1]
-  puts "Making new Whales App:"
-  app_name = ARGV[1]
-  display = {verbose: true}
+options = {}
 
+subtext = <<HELP
+Commonly used command are:
+   new :     creates new Whales app
+   server :  start a Whales app server
+See 'whales COMMAND --help' for more information on a specific command.
+HELP
+
+global = OptionParser.new do |opts|
+  opts.banner = "Usage: whales [options] [subcommand [options]]"
+  opts.on("-q", "--quiet", "Run verbosely") do
+    options[:verbose] = false
+  end
+  opts.separator ""
+  opts.separator subtext
+end
+# end.parse!
+
+subcommands = {
+  'new' => OptionParser.new do |opts|
+    opts.banner = "Usage: new [app_name] [options]"
+  end,
+  'server' => OptionParser.new do |opts|
+    opts.banner = "Usage: server [options]"
+  end
+}
+
+global.order!
+command = ARGV.shift
+subcommands[command].order!
+
+options[:verbose] = true if options[:verbose].nil?
+
+case command
+when 'new'
+  puts "Making new Whales App:"
+  app_name = ARGV.shift
+  display = { verbose: options[:verbose] }
   mkdir app_name, display
   cd app_name
   touch "routes.rb", display
+
   File.open("routes.rb", 'w') do |f|
-    f.write <<-TEXT
-require_relative '../whales/whales_actions/lib/whales_controller/base'
-
-def make_router
-  router = WhalesDispatch::Router.new
-
-  router.draw do
-    # include routes using this syntax:
-    # get Regexp.new("^/users/new$"), UsersController, :new
-    # or
-    # resources :users, :parent, only: [:new]
-    #
-    # nested resources are given as blocks to :parent resources
-    # resources :posts, :parent do
-    #   resources :comments, :nested, only: [:index, :new, :create]
-    # end
-  end
-
-  router
-end
-    TEXT
+    f.write File.read(File.join(__dir__, '../template/routes.rb'))
   end
 
   touch "Gemfile", display
   File.open("Gemfile", "w") do |f|
-    f.write <<-TEXT
-source 'https://rubygems.org'\n
-
-require 'whales'
-    TEXT
+    f.write File.read(File.join(__dir__, '../template/Gemfile'))
   end
 
   mkdir "config", display
   touch "config/database.rb", display
   File.open("config/database.rb", "w") do |f|
-    f.write <<-TEXT
-require 'whales_orm'
-
-# https://tomafro.net/2010/01/tip-relative-paths-with-file-expand-path
-ROOT_FOLDER = File.join(File.dirname(__FILE__), '../db')
-
-# sql file name goes here, the default is database.sql
-SQL_FILE = File.join(ROOT_FOLDER, 'database.sql')
-
-# Here you can configure where you want the database file to be saved
-DB_FILE = File.join(ROOT_FOLDER, 'database.db')
-    TEXT
+    f.write File.read(File.join(__dir__, '../template/database.rb'))
   end
 
   mkdir "db", display
@@ -68,26 +69,16 @@ DB_FILE = File.join(ROOT_FOLDER, 'database.db')
 
   touch "app/controllers/application_controller.rb", display
   File.open("app/controllers/application_controller.rb", "w") do |f|
-    f.write <<-TEXT
-require 'whales_actions'
-require_relative '../../config/database.rb'
-
-class ApplicationController < WhalesController::Base
-end
-    TEXT
+    f.write File.read(File.join(__dir__, '../template/application_controller.rb'))
   end
 
   cd 'app'
   mkdir 'models', display
   mkdir 'views'
-
-end
-
-# if ARGV.first == 'server' || ARGV.first == 's'
-#   start_server(router)
-# end
-
-if ARGV.first == 'generate' || ARGV.first == 'g' && ARGV.length == 3
+when "server" || "s"
+  raise NotImplementedError
+  # start_server(router)
+when 'generate' || 'g'
   type = ARGV[1]
   name = ARGV[2]
 
