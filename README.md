@@ -6,13 +6,16 @@ is a lightweight web framework written in Ruby, inspired by popular MVC framewor
 
 ##Installation
 
-The easiest way to install Whales is to clone this repo.
+Whales can be installed using RubyGems:
+`gem install 'whales'`
+
+Or you can include it directly in your projects Gemfile:
+`gem 'whales', '0.1.1'`
 
 ##Your First Whales Project
 **Create a new app:**
 ```
-cd whales
-./whales new MyApp
+whales new MyApp
 ```
 
 **Start working:**
