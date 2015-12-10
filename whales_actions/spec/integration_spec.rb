@@ -1,5 +1,5 @@
 require 'webrick'
-require_relative '../lib/whales_controller/base'
+require_relative 'spec_helper.rb'
 
 describe "the symphony of things" do
   let(:req) { WEBrick::HTTPRequest.new(Logger: nil) }
