@@ -77,7 +77,6 @@ when 'new'
   mkdir 'views'
 when "server" || "s"
   raise NotImplementedError
-  # start_server(router)
 when 'generate' || 'g'
   type = ARGV[1]
   name = ARGV[2]

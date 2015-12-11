@@ -8,6 +8,8 @@ PATH
       whales_orm (= 0.1.1)
     whales_actions (0.1.1)
     whales_orm (0.1.1)
+      activesupport
+      sqlite3
 
 GEM
   remote: https://rubygems.org/
