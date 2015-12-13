@@ -1,4 +1,4 @@
-require 'json'
+require 'yaml'
 require 'webrick'
 
 module WhalesDispatch
@@ -6,7 +6,7 @@ module WhalesDispatch
 
     def initialize(request)
       request.cookies.each do |cookie|
-        @value = JSON.parse(cookie.value) if cookie.name == '_rails_lite_app'
+        @value = YAML.load(cookie.value) if cookie.name == '_whales_app'
       end
       @value ||= {}
     end
@@ -20,9 +20,11 @@ module WhalesDispatch
     end
 
     def store_session(response)
-      cookie = WEBrick::Cookie.new('_rails_lite_app', @value.to_json)
+      cookie = WEBrick::Cookie.new('_whales_app', @value.to_yaml)
+      puts "got past cookie"
       cookie.path = '/'
       response.cookies << cookie
+      puts "added cookie to response"
     end
 
   end

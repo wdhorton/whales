@@ -6,7 +6,7 @@ module WhalesDispatch
 
     def initialize(request)
       request.cookies.each do |cookie|
-        @value_for_now = JSON.parse(cookie.value) if cookie.name == '_rails_lite_flash'
+        @value_for_now = JSON.parse(cookie.value) if cookie.name == '_whales_flash'
       end
       @value_for_now ||= {}
       @value_for_next = {}
@@ -26,7 +26,7 @@ module WhalesDispatch
     end
 
     def store_flash(response)
-      cookie = WEBrick::Cookie.new('_rails_lite_flash', @value_for_next.to_json)
+      cookie = WEBrick::Cookie.new('_whales_flash', @value_for_next.to_json)
       cookie.path = '/'
       response.cookies << cookie
     end

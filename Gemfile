@@ -3,6 +3,6 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'rspec'
-gem "webrick"
-gem "activesupport"
+gem "webrick", "~> 1.3.1"
+gem "activesupport", "4.0.13"
 gem "sqlite3"

@@ -3,6 +3,7 @@
 require 'optparse'
 require 'fileutils'
 include FileUtils
+require 'whales_orm'
 
 options = {}
 
@@ -76,7 +77,9 @@ when 'new'
   mkdir 'models', display
   mkdir 'views'
 when "server" || "s"
-  raise NotImplementedError
+  require "/Users/William/desktop/whales_app/whales_app/routes"
+  require_relative "../server"
+  start_server(make_router)
 when 'generate' || 'g'
   type = ARGV[1]
   name = ARGV[2]

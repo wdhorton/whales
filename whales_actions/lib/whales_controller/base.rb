@@ -10,7 +10,7 @@ require_relative '../whales_dispatch/session'
 
 module WhalesController
   class Base
-  attr_reader :params
+    attr_reader :params
     attr_accessor :res, :req
 
     def initialize(request, response, route_params = {})
@@ -46,7 +46,7 @@ module WhalesController
       self.res.body = content
       @already_built_response = true
       session.store_session(res)
-      flash.store_flash(res)
+      # flash.store_flash(res)
     end
 
     def redirect_to(url)
@@ -55,7 +55,7 @@ module WhalesController
       self.res.status = 302
       @already_built_response = true
       session.store_session(res)
-      flash.store_flash(res)
+      # flash.store_flash(res)
     end
 
     def render(template_name, file_location = nil)
@@ -72,9 +72,9 @@ module WhalesController
     private
 
     def verify_authenticity_token
-      unless params[:authenticity_token] == session["authenticity_token"]
-        raise "Missing authenticity token"
-      end
+      # unless params[:authenticity_token] == session["authenticity_token"]
+      #   raise "Missing authenticity token"
+      # end
     end
 
   end

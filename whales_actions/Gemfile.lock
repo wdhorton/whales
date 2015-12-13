@@ -2,11 +2,14 @@ PATH
   remote: .
   specs:
     whales_actions (0.1.1)
+      activesupport
+      json (= 1.8.3)
+      webrick
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.2.4)
+    activesupport (4.2.5)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
@@ -75,14 +78,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport
   bundler (~> 1.10)
   guard
   guard-rspec
   pry
   rake (~> 10.0)
   rspec
-  webrick
   whales_actions!
 
 BUNDLED WITH

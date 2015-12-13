@@ -36,9 +36,6 @@ describe WhalesDispatch::Route do
     after(:all) { Object.send(:remove_const, "DummyController") }
 
     it "instantiates controller and invokes action" do
-      # reader beware. hairy adventures ahead.
-      # this is really checking way too much implementation,
-      # but tests the aproach recommended in the project
       allow(req).to receive(:path) { "/users" }
 
       dummy_controller_class = DummyController
