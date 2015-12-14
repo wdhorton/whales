@@ -32,6 +32,7 @@ whales server
 WhalesORM is the object-relational mapper behind Whales. It connects to a SQLite
 database that the user can create and modify in their `db/database.sql` file.
 
+####`WhalesORM::Base`####
 The features of WhalesORM are accessed by making a class that inherits from
 `WhalesORM::Base`. The base class provides the following methods:
 
@@ -64,3 +65,35 @@ camel-cased class name.
 `update`.
 
 `#update`: updates the object's entry in the database
+
+####`WhalesORM::QueryMethods`####
+`WhalesORM::Base` gains additional methods by extending the `WhalesORM::QueryMethods`
+module.
+
+`::where(params)`: gets objects from the database that match the given params hash.
+This method is chainable and lazy-evaluating.
+
+This is implemented using a `WhalesORM::Relation` class that inherits from Ruby's
+`BasicObject`. It puts off the database call until it gets a method call it doesn't
+recognize.
+
+```ruby
+module WhalesORM
+  class Relation < BasicObject
+    ...
+    def method_missing(method, *args, &blk)
+      results = self.execute
+      results.send(method, *args, &blk)
+    end
+    ...
+  end
+end
+```
+
+`::includes(relation)`: helps to prevent N+1 queries by including the given relation
+in the query. Also lazy-evaluating.
+
+####`WhalesORM::Associatable`####
+`WhalesORM::Base` also extends `WhalesORM::Associatable`.
+
+`::belongs_to(relation_name)`: associates the class to `relation_name` via a foreign key `relation_name_id` so that the method `#relation_name` returns an object of class `relation_name` with id equal to `relation__name_id`

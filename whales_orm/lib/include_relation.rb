@@ -11,10 +11,21 @@ module WhalesORM
         ON
           #{class_name.table_name}.#{association.primary_key} = #{association.table_name}.#{association.foreign_key}
       SQL
+      @class_name = class_name
+    end
+
+    def method_missing(method, *args, &blk)
+      results = self.execute
+      results.send(method, *args, &blk)
+    end
+
+    def load
+      execute
     end
 
     def execute
-
+      results = ::DBConnection.execute(@query)
+      @class_name.parse_all(results)
     end
   end
 end
