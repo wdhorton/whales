@@ -37,7 +37,7 @@ The features of WhalesORM are accessed by making a class that inherits from
 
 `::all`: returns all the instances of the class stored in the table.
 
-`::columns`: returns an array with the columns.
+`::columns`: returns an array with the columns of the class's table.
 
 `::destroy_all`: deletes all the rows in the class's table.
 
