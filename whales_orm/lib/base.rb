@@ -42,6 +42,26 @@ module WhalesORM
       end
     end
 
+    def self.destroy_all(conditions = {})
+      if conditions.empty?
+        deleted = self.all
+        where_line = nil
+      else
+        deleted = self.where(conditions)
+        where_line = conditions.keys.map do |key|
+          "#{ key } = :#{ key }"
+        end.join(" AND ").insert(0, "WHERE ")
+      end
+
+      DBConnection.execute(<<-SQL, conditions)
+      DELETE FROM
+        #{ self.table_name }
+        #{ where_line }
+      SQL
+
+      deleted
+    end
+
     def self.table_name=(table_name)
       @table_name = table_name
     end
@@ -94,6 +114,17 @@ module WhalesORM
       self.class.columns.map { |attr_name| send(attr_name) }
     end
 
+    def destroy
+      DBConnection.execute(<<-SQL, id)
+        DELETE FROM
+          #{self.class.table_name}
+        WHERE
+          id = ?
+      SQL
+
+      self
+    end
+
     def insert
       col_names = self.class.columns.drop(1).join(',')
       question_marks = (["?"] * (self.class.columns.length - 1)).join(',')
@@ -107,6 +138,10 @@ module WhalesORM
 
       self.id = DBConnection.last_insert_row_id
       self
+    end
+
+    def save
+      id.nil? ? insert : update
     end
 
     def update
@@ -125,39 +160,5 @@ module WhalesORM
       self
     end
 
-    def save
-      id.nil? ? insert : update
-    end
-
-    def destroy
-      DBConnection.execute(<<-SQL, id)
-        DELETE FROM
-          #{self.class.table_name}
-        WHERE
-          id = ?
-      SQL
-
-      self
-    end
-
-    def self.destroy_all(conditions = {})
-      if conditions.empty?
-        deleted = self.all
-        where_line = nil
-      else
-        deleted = self.where(conditions)
-        where_line = conditions.keys.map do |key|
-          "#{ key } = :#{ key }"
-        end.join(" AND ").insert(0, "WHERE ")
-      end
-
-      DBConnection.execute(<<-SQL, conditions)
-      DELETE FROM
-        #{ self.table_name }
-        #{ where_line }
-      SQL
-
-      deleted
-    end
   end
 end

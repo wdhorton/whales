@@ -26,3 +26,29 @@ cd MyApp
 # start the server
 whales server
 ```
+
+##Documentation##
+###WhalesORM###
+WhalesORM is the object-relational mapper behind Whales. It connects to a SQLite
+database that the user can create and modify in their `db/database.sql` file.
+
+The features of WhalesORM are accessed by making a class that inherits from
+`WhalesORM::Base`. The base class provides the following methods:
+`::all`: returns all the instances of the class stored in the table
+`::columns`: returns an array with the columns
+`::destroy_all`: deletes all the rows in the class's table.
+`::find(id)`: returns the object of the class with the given id
+`::find_by_col_x(value)`: returns the object(s) of the class whose `col_x`
+equals `value`. Implemented using Ruby's `method_missing`. Also can be extended to
+`::find_by_col_x_and_col_y(val_x, val_y)`.
+`::table_name=(name)`: allows the user to set a custom table name for the class
+`::table_name`: returns the table name, which defaults to the pluralized,
+camel-cased class name.
+
+`#attributes`: returns the names of all the attributes for the object.
+`#attribute_values`: returns the values for all the object's attributes.
+`#destroy`: deletes the object from the database. Returns the object.
+`#insert`: inserts the object as a row in the class's table
+`#save`: if the object is not in the database, it `insert`s it; if it is, it calls
+`update`.
+`#update`: updates the object's entry in the database

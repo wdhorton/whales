@@ -1,12 +1,12 @@
-require 'yaml'
 require 'webrick'
+require 'json'
 
 module WhalesDispatch
   class Session
 
     def initialize(request)
       request.cookies.each do |cookie|
-        @value = YAML.load(cookie.value) if cookie.name == '_whales_app'
+        @value = JSON.parse(cookie.value) if cookie.name == '_whales_app'
       end
       @value ||= {}
     end
@@ -20,11 +20,9 @@ module WhalesDispatch
     end
 
     def store_session(response)
-      cookie = WEBrick::Cookie.new('_whales_app', @value.to_yaml)
-      puts "got past cookie"
+      cookie = WEBrick::Cookie.new('_whales_app', @value.to_json)
       cookie.path = '/'
       response.cookies << cookie
-      puts "added cookie to response"
     end
 
   end

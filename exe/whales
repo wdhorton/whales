@@ -77,8 +77,7 @@ when 'new'
   mkdir 'models', display
   mkdir 'views'
 when "server" || "s"
-  puts $LOAD_PATH
-  require_relative "../../whales_app/routes"
+  require_relative pwd + "/routes"
   require_relative "../server"
   start_server(make_router)
 when 'generate' || 'g'
