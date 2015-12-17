@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/wdhorton/whales"
   spec.license       = "MIT"
 
-  spec.files         = ['README.md', 'exe/whales']
+  spec.files         = ['README.md', 'exe/whales', 'template/Gemfile', 'template/application_controller.rb', 'template/database.rb', 'template/routes.rb']
 
   spec.bindir       = 'exe'
   spec.executables   = ["whales"]
