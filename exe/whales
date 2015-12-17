@@ -78,8 +78,8 @@ when 'new'
   mkdir 'views', display
   mkdir 'assets', display
   cd 'assets'
-  mkdir 'assets/stylesheets'
-  mkdir 'assets/javascripts'
+  mkdir 'stylesheets'
+  mkdir 'javascripts'
 when "server" || "s"
   require_relative pwd + "/routes"
   require_relative "../server"
