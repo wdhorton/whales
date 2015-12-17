@@ -70,7 +70,7 @@ when 'new'
 
   touch "app/controllers/application_controller.rb", display
   File.open("app/controllers/application_controller.rb", "w") do |f|
-    f.write File.read(File.join(__dir__, '../../template/application_controller.rb'))
+    f.write File.read(File.expand_path('../../template/application_controller.rb', __FILE__))
   end
 
   cd 'app'
