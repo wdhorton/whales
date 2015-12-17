@@ -49,18 +49,18 @@ when 'new'
   touch "routes.rb", display
 
   File.open("routes.rb", 'w') do |f|
-    f.write File.read(File.join(__dir__, '../template/routes.rb'))
+    f.write File.read(File.expand_path('../template/routes.rb', __FILE__))
   end
 
   touch "Gemfile", display
   File.open("Gemfile", "w") do |f|
-    f.write File.read(File.join(__dir__, '../template/Gemfile'))
+    f.write File.read(File.expand_path('../template/Gemfile', __FILE__))
   end
 
   mkdir "config", display
   touch "config/database.rb", display
   File.open("config/database.rb", "w") do |f|
-    f.write File.read(File.join(__dir__, '../template/database.rb'))
+    f.write File.read(File.expand_path('../template/database.rb', __FILE__))
   end
 
   mkdir "db", display
@@ -75,7 +75,11 @@ when 'new'
 
   cd 'app'
   mkdir 'models', display
-  mkdir 'views'
+  mkdir 'views', display
+  mkdir 'assets', display
+  cd 'assets'
+  mkdir 'assets/stylesheets'
+  mkdir 'assets/javascripts'
 when "server" || "s"
   require_relative pwd + "/routes"
   require_relative "../server"
