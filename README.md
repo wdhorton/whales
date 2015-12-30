@@ -97,3 +97,21 @@ in the query. Also lazy-evaluating.
 `WhalesORM::Base` also extends `WhalesORM::Associatable`.
 
 `::belongs_to(relation_name)`: associates the class to `relation_name` via a foreign key `relation_name_id` so that the method `#relation_name` returns an object of class `relation_name` with id equal to `relation__name_id`
+
+###WhalesActions###
+WhalesActions provides the Views and Controllers, as well as the server and routing,
+for Whales. It uses a WEBrick server, and ERB for templating.
+
+####`WhalesController::Base`####
+The features of WhalesController are accessed by making a class that inherits from
+`WhalesController::Base`. The base class provides the following methods:
+
+`#flash` : allows access to the flash, which stores temporary cookies in the browser
+
+`#form_authenticity_token` : provides an authenticity token to protect from CSRF attacks
+
+`#redirect_to` : redirects to a different page from a controller action
+
+`#render` : renders an ERB template as a View
+
+`#session` : allows access to the session, which can be used to store cookies in the browser
