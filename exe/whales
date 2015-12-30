@@ -31,6 +31,12 @@ subcommands = {
   'server' => OptionParser.new do |opts|
     opts.banner = "Usage: server [options]"
   end
+  'generate' => OptionParser.new do |opts|
+    opts.banner = "Usage: generate [model | controller] [name]"
+  end
+  'g' => OptionParser.new do |opts|
+    opts.banner = "Usage: g [model | controller] [name]"
+  end
 }
 
 global.order!
