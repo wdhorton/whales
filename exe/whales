@@ -36,6 +36,9 @@ subcommands = {
   end,
   'g' => OptionParser.new do |opts|
     opts.banner = "Usage: g [model | controller] [name]"
+  end,
+  'db:reset' => OptionParser.new do |opts|
+    opts.banner = "Usage: db:reset"
   end
 }
 
@@ -91,8 +94,8 @@ when "server" || "s"
   require_relative "../server"
   start_server(make_router)
 when 'generate' || 'g'
-  type = ARGV[1]
-  name = ARGV[2]
+  type = ARGV.shift
+  name = ARGV.shift
 
   if type == "model"
     path = "app/#{type}s/#{name.downcase}.rb"
@@ -121,8 +124,7 @@ end\n
 
     mkdir "app/views/#{name.downcase}"
   end
+when 'db:reset'
+  require_relative pwd + "/config/database"
+  DBConnection.reset
 end
-#
-# if ARGV.first == "db:reset"
-#   DBConnection.reset
-# end
