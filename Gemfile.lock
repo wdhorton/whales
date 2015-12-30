@@ -1,15 +1,15 @@
 PATH
   remote: .
   specs:
-    whales (0.1.3)
+    whales (0.1.8)
       bundler (~> 1.10)
       rake (= 10.4.2)
-      whales_actions (= 0.1.3)
-      whales_orm (= 0.1.3)
-    whales_actions (0.1.3)
+      whales_actions (= 0.1.8)
+      whales_orm (= 0.1.8)
+    whales_actions (0.1.8)
       activesupport
       webrick
-    whales_orm (0.1.3)
+    whales_orm (0.1.8)
       activesupport
       sqlite3
 

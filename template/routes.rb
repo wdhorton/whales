@@ -1,5 +1,4 @@
-require_relative '../whales/whales_actions/lib/whales_controller/base'
-
+require 'whales_actions'
 def make_router
   router = WhalesDispatch::Router.new
 
